@@ -52,6 +52,11 @@ To complete this project, I used the following softwares:
 * A text editor, I used Atom
 * A terminal application
 
+## Builtin library used
+- datetime
+- Pandas
+- Numpy
+
 ## Files used
 * chicago.csv
 * new_york_city.csv
