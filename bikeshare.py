@@ -15,13 +15,13 @@ def get_filters():
         (str) month - name of the month to filter by, or "all" to apply no month filter
         (str) day - name of the day of week to filter by, or "all" to apply no day filter
     """
-    print('Hello! Let\'s explore some US bikeshare data! \nWould you like to explore Chicago, New York City or Washington?')
-    
+    print("Hello! Let's explore some US bikeshare data! \nWould you like to explore Chicago, New York City or Washington?")
+
     # TO DO: get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
     city = input("Enter name of city to explore: ").lower()
     while city.lower() not in ["chicago","new york city", "washington"]:
         city = input("Your choice of city does not match our available cities. \nPlease try again: ").lower()
-    
+
 
     # TO DO: get user input for month (all, january, february, ... , june)
     month = input("Enter the month to view data for: ").lower()
@@ -43,37 +43,31 @@ def load_data(city, month, day):
     """
     Loads data for the specified city and filters by month and day if applicable.
 
-    Args:
-        (str) city - name of the city to analyze
-        (str) month - name of the month to filter by, or "all" to apply no month filter
-        (str) day - name of the day of week to filter by, or "all" to apply no day filter
-    Returns:
-        df - Pandas DataFrame containing city data filtered by month and day
     """
     # load data file into a dataframe
     df = pd.read_csv(CITY_DATA[city])
-    
+
     # convert the Start Time column to datetime
     df["Start Time"] = pd.to_datetime(df["Start Time"])
-    
+
     # extract month and day of the week from Start Time to create new columns
     df["month"] = df["Start Time"].dt.month
     df["day_of_week"] = df["Start Time"].dt.weekday_name
-    
+
     # filter by month if applicable
-    
+
     if month != "all":
-        
+
         # use the index of the months list to get the corresponding int
         months = [ "january", "february", "march", "april", "may", "june"]
         month = months.index(month) + 1
-        
+
         #filter by month to create the new dataframe
         df = df[df["month"] == month ]
-    
+
     # filter by day of week if applicable
     if day != "all":
-        
+
         # filter by day of week to create a new dataframe
         df = df[df["day_of_week"] == day]
 
@@ -167,8 +161,11 @@ def user_stats(df):
     start_time = time.time()
 
     # TO DO: Display counts of user types
-    user_types = df["User Type"].value_counts()
-    print("Counts for each user type is:\n{}".format(user_types))
+    try:
+        user_types = df["User Type"].value_counts()
+        print("Counts for each user type     is:\n{}".format(user_types))
+    except:
+        print("The user count is: Oops! There are no user categories to count")
 
 
     # TO DO: Display counts of gender
@@ -177,7 +174,7 @@ def user_stats(df):
         print("The gender count is:\n{}".format(gender_count))
     except KeyError:
         print("The gender count is: Oops! no data for gender")
-    
+
 
 
     # TO DO: Display earliest, most recent, and most common year of birth
@@ -186,13 +183,13 @@ def user_stats(df):
         print("The earliest year of birth is:", earliest_year_of_birth)
     except:
         print("Oops! sorry no data avaliable for earliest year of birth")
-        
+
     try:
         recent_year_of_birth = df["Birth Year"].max()
         print("The most recent year of birth is:", recent_year_of_birth)
     except:
         print("Oops! sorry no data avaliable for most recent year of birth")
-        
+
     try:
         common_year_of_birth = df["Birth Year"].mode()[0]
         print("The most common year of birth is:", common_year_of_birth)
@@ -202,20 +199,20 @@ def user_stats(df):
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
-    
-    
+
+
 def data_display_mode(df):
     """ display five rows of data and ask user to add more five 5 rows.
     continue till user type 'no'
     """
     print("Would you like to view raw data?\nNote that raw data will be displayed 5 rows at a time and you just need to press 'enter' to view next 5 rows.  ")
     data_display = 0
-    
+
     while ( input("Click 'enter' to continue to view raw data or type 'no' to quit : ") != "no"):
         data_display += 5
         print(df.head(data_display))
-        
-        
+
+
 
 
 def main():
