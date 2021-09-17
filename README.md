@@ -57,6 +57,9 @@ To complete this project, I used the following softwares:
 - Pandas
 - Numpy
 
+## Interactive Environment
+This project explores Bikeshare data from 3 differents cities. It uses data from csv files to compute statistics from those 3 cities, also takes user inputs to create an interactive user experience.
+
 ## Files used
 * chicago.csv
 * new_york_city.csv
